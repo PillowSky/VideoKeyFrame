@@ -5,11 +5,12 @@ file = '../Batman.wmv';
 folder = 'keyframe';
 video = VideoReader(file);
 total = video.NumberOfFrames
+frames = read(video, [1 Inf]);
 
 % Calculate dct coefficient
 dcts = zeros(total, 16, 16);
 for i = 1:total
-    freq = dct2(imresize(rgb2gray(read(video, i)), [64, 64]));
+    freq = dct2(imresize(rgb2gray(frames(:,:,:,i)), [64, 64]));
     dcts(i,:,:) = freq(1:16, 1:16);
 end
 
@@ -31,12 +32,12 @@ if ~exist(folder, 'dir')
 end
 
 % First frame is always keyframe
-imwrite(read(video, 1), sprintf('%s/frame_%05d.jpg', folder, 0));
+imwrite(frames(:,:,:,1), sprintf('%s/frame_%05d.jpg', folder, 0));
 
 % Greater than threshold select as a key frame
 for i = 1:total-1
     if (differences(i) > threshold)
-        imwrite(read(video, i+1), sprintf('%s/frame_%05d.jpg', folder, i));
+        imwrite(frames(:,:,:,i+1), sprintf('%s/frame_%05d.jpg', folder, i));
     end 
 end 
    

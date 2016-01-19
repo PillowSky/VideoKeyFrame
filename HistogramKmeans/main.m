@@ -6,11 +6,12 @@ folder = 'keyframe';
 k = 5;
 video = VideoReader(file);
 total = video.NumberOfFrames
+frames = read(video, [1 Inf]);
 
 % Calculate histogram
 histograms = zeros(total, 256);
 for i = 1:total
-    histograms(i,:) = imhist(rgb2gray(read(video, i)), 256);
+    histograms(i,:) = imhist(rgb2gray(frames(:,:,:,i)), 256);
 end
 
 % Do kmeans
@@ -24,5 +25,5 @@ end
 % Each center is a keyframe
 for i = 1:k
     [M, I] = min(D(:,i));
-    imwrite(read(video, I), sprintf('%s/frame_%05d.jpg', folder, i));
+    imwrite(frames(:,:,:,I) sprintf('%s/frame_%05d.jpg', folder, i));
 end

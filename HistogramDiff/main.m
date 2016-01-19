@@ -5,11 +5,12 @@ file = '../Batman.wmv';
 folder = 'keyframe';
 video = VideoReader(file);
 total = video.NumberOfFrames
+frames = read(video, [1 Inf]);
 
 % Calculate histogram
 histograms = zeros(total, 256);
 for i = 1:total
-    histograms(i,:) = imhist(rgb2gray(read(video, i)), 256);
+    histograms(i,:) = imhist(rgb2gray(frames(:,:,:,i)), 256);
 end
 
 % Calculate histogram difference between two frames 
@@ -29,11 +30,11 @@ if ~exist(folder, 'dir')
 end
 
 % First frame is always keyframe
-imwrite(read(video, 1), sprintf('%s/frame_%05d.jpg', folder, 0));
+imwrite(frames(:,:,:,1), sprintf('%s/frame_%05d.jpg', folder, 0));
 
 % Greater than threshold select as a key frame
 for i = 1:total-1
     if (differences(i) > threshold)
-        imwrite(read(video, i+1), sprintf('%s/frame_%05d.jpg', folder, i));
+        imwrite(frames(:,:,:,i+1), sprintf('%s/frame_%05d.jpg', folder, i));
     end 
 end 
