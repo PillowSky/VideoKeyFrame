@@ -1,0 +1,4 @@
+ffmpeg.exe -i "../Batman.wmv" -vf select="eq(pict_type\,PICT_TYPE_I)" -vsync 2 "keyframe-batman/frame_05%d.jpg"
+
+ffmpeg.exe -i "../News.mp4" -vf select="eq(pict_type\,PICT_TYPE_I)" -vsync 2 "keyframe-news/frame_05%d.jpg"
+
