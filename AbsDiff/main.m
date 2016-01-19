@@ -1,7 +1,7 @@
 clc;
 clear all;
 
-file = 'Batman.wmv';
+file = '../Batman.wmv';
 folder = 'keyframe';
 video = VideoReader(file);
 
@@ -14,7 +14,7 @@ for i = 1:total-1
     now = read(video, i);
     next = read(video, i+1);
     % Calculate histogram difference between two frames 
-    data(i) = HistogramDiff(now, next);
+    data(i) = AbsDiff(now, next);
 end
    
 % Calculate mean and standard deviation and extracting frames
@@ -31,7 +31,7 @@ end
 for i = 1:total-1
     now = read(video,i);
     next = read(video,i+1);
-    result = HistogramDiff(now,next);
+    result = AbsDiff(now,next);
     % Greater than threshold select as a key frame
     if (result > threshold)
         imwrite(next, sprintf('keyframe/frame_%05d.jpg', i));
