@@ -4,36 +4,28 @@ clear all;
 file = '../Batman.wmv';
 folder = 'keyframe';
 video = VideoReader(file);
-
-%Extracting frames, prepare data array
 total = video.NumberOfFrames
-data = zeros(total - 1, 1);
 
+% Calculate abs difference between two frames
+differences = zeros(total - 1, 1);
 for i = 1:total-1
-    % Retrieve data from video
-    now = read(video, i);
-    next = read(video, i+1);
-    % Calculate histogram difference between two frames 
-    data(i) = AbsDiff(now, next);
+    temp = imabsdiff(read(video, i), read(video, i+1));
+    differences(i) = sum(temp(:));
 end
    
-% Calculate mean and standard deviation and extracting frames
-mean = mean2(data)
-std = std2(data)
-threshold = std + mean*4
+% Calculate mean and standard deviation
+meanValue = mean(differences)
+stdValue = std(differences)
+threshold = meanValue + stdValue*3
 
-% Make sure folder exist
+% Check folder exist
 if ~exist(folder, 'dir')
-  mkdir(folder);
+    mkdir(folder);
 end
 
-% Loop over frames again
+% Greater than threshold select as a key frame
 for i = 1:total-1
-    now = read(video,i);
-    next = read(video,i+1);
-    result = AbsDiff(now,next);
-    % Greater than threshold select as a key frame
-    if (result > threshold)
-        imwrite(next, sprintf('keyframe/frame_%05d.jpg', i));
+    if (differences(i) > threshold)
+        imwrite(read(video, i+1), sprintf('%s/frame_%05d.jpg', folder, i));
     end 
 end 

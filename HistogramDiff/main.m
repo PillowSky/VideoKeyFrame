@@ -13,14 +13,14 @@ for i = 1:total
 end
 
 % Calculate histogram difference between two frames 
-difference = zeros(total - 1, 1);
+differences = zeros(total - 1, 1);
 for i = 1:total-1
-    difference(i) = sum(imabsdiff(histograms(i,:), histograms(i+1,:)));
+    differences(i) = sum(imabsdiff(histograms(i,:), histograms(i+1,:)));
 end
    
 % Calculate mean and standard deviation
-meanValue = mean(difference)
-stdValue = std(difference)
+meanValue = mean(differences)
+stdValue = std(differences)
 threshold = meanValue + stdValue*3
 
 % Check folder exist
@@ -30,7 +30,7 @@ end
 
 % Greater than threshold select as a key frame
 for i = 1:total-1
-    if (difference(i) > threshold)
-        imwrite(read(video, i+1), sprintf('keyframe/frame_%05d.jpg', i));
+    if (differences(i) > threshold)
+        imwrite(read(video, i+1), sprintf('%s/frame_%05d.jpg', folder, i));
     end 
 end 
