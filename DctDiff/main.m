@@ -7,10 +7,10 @@ video = VideoReader(file);
 total = video.NumberOfFrames
 
 % Calculate dct coefficient
-dcts = zeros(total, 64, 64);
+dcts = zeros(total, 16, 16);
 for i = 1:total
-    freq = dct2(imresize(rgb2gray(read(video, i)), [128, 128]));
-    dcts(i,:,:) = freq(1:64, 1:64);
+    freq = dct2(imresize(rgb2gray(read(video, i)), [64, 64]));
+    dcts(i,:,:) = freq(1:16, 1:16);
 end
 
 % Calculate dct difference between two frames 
@@ -23,7 +23,7 @@ end
 % Calculate mean and standard deviation
 meanValue = mean(differences)
 stdValue = std(differences)
-threshold = meanValue + stdValue*2
+threshold = meanValue + stdValue*3
 
 % Check folder exist
 if ~exist(folder, 'dir')
