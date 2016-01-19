@@ -1,7 +1,7 @@
 clc;
 clear all;
 
-file = '../Batman.wmv';
+file = '../News.mp4';
 folder = 'keyframe';
 video = VideoReader(file);
 total = video.NumberOfFrames

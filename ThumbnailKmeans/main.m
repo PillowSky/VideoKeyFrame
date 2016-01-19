@@ -1,9 +1,9 @@
 clc;
 clear all;
 
-file = '../Batman.wmv';
+file = '../News.mp4';
 folder = 'keyframe';
-k = 5;
+k = 40;
 video = VideoReader(file);
 total = video.NumberOfFrames
 frames = read(video, [1 Inf]);
