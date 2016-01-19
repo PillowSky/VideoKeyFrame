@@ -9,8 +9,9 @@ total = video.NumberOfFrames
 % Calculate abs difference between two frames
 differences = zeros(total - 1, 1);
 for i = 1:total-1
-    temp = imabsdiff(read(video, i), read(video, i+1));
+    temp = imabsdiff(rgb2gray(imresize(read(video, i), [16, 16])), rgb2gray(imresize(read(video, i+1), [16, 16])));
     differences(i) = sum(temp(:));
+    i
 end
    
 % Calculate mean and standard deviation
