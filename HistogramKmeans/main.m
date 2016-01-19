@@ -25,5 +25,5 @@ end
 % Each center is a keyframe
 for i = 1:k
     [M, I] = min(D(:,i));
-    imwrite(frames(:,:,:,I) sprintf('%s/frame_%05d.jpg', folder, i));
+    imwrite(frames(:,:,:,I), sprintf('%s/frame_%05d.jpg', folder, i));
 end
