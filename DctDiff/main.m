@@ -23,7 +23,7 @@ end
 % Calculate mean and standard deviation
 meanValue = mean(differences)
 stdValue = std(differences)
-threshold = meanValue + stdValue*3
+threshold = meanValue + stdValue*2
 
 % Check folder exist
 if ~exist(folder, 'dir')

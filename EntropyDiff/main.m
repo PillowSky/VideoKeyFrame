@@ -28,6 +28,9 @@ if ~exist(folder, 'dir')
     mkdir(folder);
 end
 
+% First frame is always keyframe
+imwrite(read(video, 1), sprintf('%s/frame_%05d.jpg', folder, 0));
+
 % Greater than threshold select as a key frame
 for i = 1:total-1
     if (differences(i) > threshold)
